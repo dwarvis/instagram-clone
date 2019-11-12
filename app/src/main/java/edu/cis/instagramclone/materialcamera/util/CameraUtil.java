@@ -8,9 +8,10 @@ import android.hardware.Camera;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -43,7 +44,7 @@ public class CameraUtil {
 
   @SuppressWarnings({"ConstantConditions", "ResultOfMethodCallIgnored"})
   public static File makeTempFile(
-      @NonNull Context context, @Nullable String saveDir, String prefix, String extension) {
+          @NonNull Context context, @Nullable String saveDir, String prefix, String extension) {
     if (saveDir == null) saveDir = context.getExternalCacheDir().getAbsolutePath();
     final String timeStamp =
         new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());

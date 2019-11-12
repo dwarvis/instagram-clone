@@ -3,15 +3,16 @@ package edu.cis.instagramclone.Share;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import edu.cis.instagramclone.R;
@@ -23,7 +24,7 @@ import edu.cis.instagramclone.Utils.SectionsPagerAdapter;
  * Created by User on 5/28/2017.
  */
 
-public class ShareActivity extends AppCompatActivity{
+public class ShareActivity extends AppCompatActivity {
     private static final String TAG = "ShareActivity";
 
     //constants

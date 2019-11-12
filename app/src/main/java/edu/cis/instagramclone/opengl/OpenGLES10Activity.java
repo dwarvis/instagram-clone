@@ -2,11 +2,12 @@ package edu.cis.instagramclone.opengl;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 
@@ -23,7 +24,7 @@ import edu.cis.instagramclone.models.UserStories;
  * Created by User on 11/27/2017.
  */
 
-public class OpenGLES10Activity extends AppCompatActivity{
+public class OpenGLES10Activity extends AppCompatActivity {
 
     private static final String TAG = "OpenGLES10Activity";
     private static final int RELEASE_PLAYER = 0;

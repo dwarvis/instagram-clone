@@ -3,9 +3,6 @@ package edu.cis.instagramclone.Login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,7 +32,6 @@ import edu.cis.instagramclone.R;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-    private static final Boolean CHECK_IF_VERIFIED = false;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -86,49 +86,49 @@ public class LoginActivity extends AppCompatActivity {
              public void onClick(View v) {
                  Log.d(TAG, "onClick: attempting to log in.");
 
-                  //TODO 1a: Get email and password strings from mEmail and mPassword EditText objects
+                  //1a: Get email and password strings from mEmail and mPassword EditText objects
+                 String email = mEmail.getText().toString();
+                 String password = mPassword.getText().toString();
 
-
-                 if( true ){ // TODO 1b: check whether the user gave a blank email or password
-                     Toast.makeText(mContext, "CHANGE ME", Toast.LENGTH_SHORT).show(); // TODO 1c: if true use Toast.makeText to inform the user of an error, give any error message you want
+                 if(email.isEmpty() || password.isEmpty()){ //1b. check whether the user gave a blank email or password
+                     Toast.makeText(mContext, "It's empty!!", Toast.LENGTH_SHORT).show(); //1c: if true use Toast.makeText to inform the user of an error, give any error message you want
                  }else{
                      mProgressBar.setVisibility(View.VISIBLE);
                      mPleaseWait.setVisibility(View.VISIBLE);
 
-                     mAuth.signInWithEmailAndPassword(null, null) //TODO 1d: If email and password are present, use mAuth.signInWithEmailAndPassword to send it to firebase, change the null's
+                     mAuth.signInWithEmailAndPassword(email, password) //1d. If email and password are present, use mAuth.signInWithEmailAndPassword to send it to firebase, change the null's
                              .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                  @Override
                                  public void onComplete(@NonNull Task<AuthResult> task) {
                                      Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                                      // TODO 1e: get current user from mAuth, store it in variable
+                                      //get current user from mAuth, store it in variable
+                                     FirebaseUser currentUser = mAuth.getCurrentUser();
 
                                      // If sign in fails, display a message to the user. If sign in succeeds
                                      // the auth state listener will be notified and logic to handle the
                                      // signed in user can be handled in the listener.
-                                     if (true) { //TODO 1f: check if task was not successful, change "true"
+                                     if (!(task.isSuccessful())) { //1f: check if task was not successful, change "true"
                                          Log.w(TAG, "signInWithEmail:failed", task.getException());
 
-                                         //TODO 1g: inform the user with a Toast that something went wrong
+                                         //1g: inform the user with a Toast that something went wrong
+                                         Toast.makeText(mContext, "something went wrong.", Toast.LENGTH_SHORT).show();
                                          mProgressBar.setVisibility(View.GONE);
                                          mPleaseWait.setVisibility(View.GONE);
                                      }
                                      else{ //if task was successful
                                          try{
-                                             if(CHECK_IF_VERIFIED){
-                                                 if(true){ //TODO 1h: Check if the user's email has been verified
-                                                     Log.d(TAG, "onComplete: success. email is verified.");
-                                                      //TODO 1i: create an intent from LoginActivity to HomeActivity and start the intent
-                                                 }else{
-                                                     Toast.makeText(mContext, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
-                                                     mProgressBar.setVisibility(View.GONE);
-                                                     mPleaseWait.setVisibility(View.GONE);
-                                                     mAuth.signOut();
-                                                 }
-                                             }
-                                             else{
+                                             if(currentUser.isEmailVerified()) { //1h: Check if the user's email has been verified, change true
                                                  Log.d(TAG, "onComplete: success. email is verified.");
+                                                 //1i: create an intent from LoginActivity to HomeActivity and start the intent
                                                  Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                                  startActivity(intent);
+                                             }
+                                             else
+                                             {
+                                                 Toast.makeText(mContext, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
+                                                 mProgressBar.setVisibility(View.GONE);
+                                                 mPleaseWait.setVisibility(View.GONE);
+                                                 mAuth.signOut();
                                              }
 
                                          }catch (NullPointerException e){

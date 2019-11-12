@@ -5,10 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,7 +32,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -40,6 +43,8 @@ import edu.cis.instagramclone.Home.HomeFragment;
 import edu.cis.instagramclone.Profile.AccountSettingsActivity;
 import edu.cis.instagramclone.R;
 import edu.cis.instagramclone.materialcamera.MaterialCamera;
+import edu.cis.instagramclone.models.Comment;
+import edu.cis.instagramclone.models.Like;
 import edu.cis.instagramclone.models.Photo;
 import edu.cis.instagramclone.models.Story;
 import edu.cis.instagramclone.models.User;
@@ -78,7 +83,7 @@ public class FirebaseMethods {
         }
     }
 
-    public void uploadNewPhoto(String photoType, final String caption,final int count, final String imgUrl,
+    public void uploadNewPhoto(String photoType, final String caption, final int count, final String imgUrl,
                                Bitmap bm){
         Log.d(TAG, "uploadNewPhoto: attempting to uplaod new photo.");
 
@@ -104,13 +109,13 @@ public class FirebaseMethods {
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                     // TODO 5c: Get URL from firebase storage, it should be of type Uri
-
+                     // 5c: Get URL from firebase storage, it should be of type Uri
+                    taskSnapshot.getDownloadUrl();
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
                     //add the new photo to 'photos' node and 'user_photos' node
-                     //TODO 5d: use addPhotoToDatabase with caption param and the firebase Url you obtained
-
+                     //5d: use addPhotoToDatabase with caption param and the firebase Url you obtained
+                    addPhotoToDatabase(caption, imgUrl);
                     //navigate to the main feed so the user can see their photo
                     Intent intent = new Intent(mContext, HomeActivity.class);
                     mContext.startActivity(intent);
@@ -405,13 +410,13 @@ public class FirebaseMethods {
         String tags = StringManipulation.getTags(caption);
         String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
 
-        //TODO 5a: create a photo object and initialize it with necessary values
+        //5a: create a photo object and initialize it with necessary values
+        Photo photoObj = new Photo(caption, getTimestamp(), url, newPhotoKey, userID, tags, new ArrayList<Like>(), new ArrayList<Comment>());
 
-
-
-        //insert into database                                      //TODO 5b: Once the Photo object has been created, insert it to the database at "user_photos" and "photos" nodes
-
-
+        //5b: Once the Photo object has been created, insert it to the database at "user_photos" and "photos" nodes
+        myRef.child(mContext.getString(R.string.dbname_user_photos))
+                .child(mContext.getString(R.string.dbname_photos))
+                .setValue(photoObj);
     }
 
     public int getImageCount(DataSnapshot dataSnapshot){
@@ -432,37 +437,36 @@ public class FirebaseMethods {
      * @param description
      * @param phoneNumber
      */
-    public void updateUserAccountSettings(String displayName, String website, String description, long phoneNumber){ //TODO finish updateUserSettings
+    public void updateUserAccountSettings(UserAccountSettings settings){ //TODO finish updateUserSettings
 
         Log.d(TAG, "updateUserAccountSettings: updating user account settings.");
 
-        if(displayName != null){
-            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
-                    .child(userID)
-                    .child(mContext.getString(R.string.field_display_name))
-                    .setValue(displayName);
-        }
-
-
-        if(website != null) {
-            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
-                    .child(userID)
-                    .child(mContext.getString(R.string.field_website))
-                    .setValue(website);
-        }
-
-        if(description != null) {
+        if(settings.getDescription() != null) {
             myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                     .child(userID)
                     .child(mContext.getString(R.string.field_description))
-                    .setValue(description);
+                    .setValue(settings.getDescription());
         }
 
-        if(phoneNumber != 0) {
+        if(settings.getDisplay_name() != null){
+            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
+                    .child(userID)
+                    .child(mContext.getString(R.string.field_display_name))
+                    .setValue(settings.getDisplay_name());
+        }
+
+        if(settings.getPhone() != 0) {
             myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                     .child(userID)
                     .child(mContext.getString(R.string.field_phone_number))
-                    .setValue(phoneNumber);
+                    .setValue(settings.getPhone());
+        }
+
+        if(settings.getWebsite() != null) {
+            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
+                    .child(userID)
+                    .child(mContext.getString(R.string.field_website))
+                    .setValue(settings.getWebsite());
         }
     }
 
@@ -573,6 +577,7 @@ public class FirebaseMethods {
                 0,
                 0,
                 0,
+                0,
                 profile_photo,
                 StringManipulation.condenseUsername(username),
                 website,
@@ -636,6 +641,11 @@ public class FirebaseMethods {
                             ds.child(userID)
                                     .getValue(UserAccountSettings.class)
                                     .getPosts()
+                    );
+                    settings.setPhone(
+                            ds.child(userID)
+                                    .getValue(UserAccountSettings.class)
+                                    .getPhone()
                     );
                     settings.setFollowing(
                             ds.child(userID)

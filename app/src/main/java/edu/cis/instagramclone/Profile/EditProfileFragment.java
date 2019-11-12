@@ -2,9 +2,6 @@ package edu.cis.instagramclone.Profile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +10,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -163,7 +164,8 @@ public class EditProfileFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: attempting to save changes.");
-                 //TODO 4a: call the method that will save the profile settings whent he checkmark is clicked
+                 //4a: call the method that will save the profile settings whent he checkmark is clicked
+                saveProfileSettings();
             }
         });
 
@@ -199,18 +201,13 @@ public class EditProfileFragment extends Fragment implements
 //            dialog.setTargetFragment(EditProfileFragment.this, 1);
 //        }
 
-        //TODO 4 : This is a really bad way to update a database. Fix this so that is uses one single UserSettings Object and a single call to updateUserAccountSettings.
-            //update displayname
-            mFirebaseMethods.updateUserAccountSettings(displayName, null, null, 0);
-            //update website
-            mFirebaseMethods.updateUserAccountSettings(null, website, null, 0);
-            //update description
-            mFirebaseMethods.updateUserAccountSettings(null, null, description, 0);
-            //update phoneNumber
-            mFirebaseMethods.updateUserAccountSettings(null, null, null, phoneNumber);
+        UserAccountSettings settings = mUserSettings.getSettings();
+        settings.setDescription(description);
+        settings.setDisplay_name(displayName);
+        settings.setPhone(phoneNumber);
+        settings.setWebsite(website);
+        mFirebaseMethods.updateUserAccountSettings(settings);
     }
-
-
 
     /**
      * Check is @param username already exists in teh database

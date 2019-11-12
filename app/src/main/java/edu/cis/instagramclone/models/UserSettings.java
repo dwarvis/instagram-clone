@@ -4,14 +4,20 @@ package edu.cis.instagramclone.models;
  * Created by User on 6/30/2017.
  */
 
-public class UserSettings { //TODO 3c: Create instance variables, constructor, and a setSettings method
+public class UserSettings { //3c: Create instance variables, constructor, and a setSettings method
 
-
+    private User user;
+    private UserAccountSettings settings;
 
     public UserSettings() {
 
     }
 
+    public UserSettings(User inUser, UserAccountSettings inSettings)
+    {
+        user = inUser;
+        settings = inSettings;
+    }
 
     public User getUser() {
         return user;
@@ -19,6 +25,11 @@ public class UserSettings { //TODO 3c: Create instance variables, constructor, a
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setSettings(UserAccountSettings settings)
+    {
+        this.settings = settings;
     }
 
     public UserAccountSettings getSettings() {

@@ -2,9 +2,6 @@ package edu.cis.instagramclone.Login;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +10,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -65,19 +69,24 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void init(){
-        btnRegister.setOnClickListener(new View.OnClickListener() { //TODO 2 this creates listener for the register button and register a new email
+        btnRegister.setOnClickListener(new View.OnClickListener() { //this creates listener for the register button and register a new email
             @Override
-            public void onClick(View v) { //TODO 2: when the button is clicked, this happens
+            public void onClick(View v) { //when the button is clicked, this happens
 
-                 //TODO 2a: get email, username and password from EditTexts, store them in instance variables
+                //2a: get email, username and password from EditTexts, store them in instance variables
+                 email = mEmail.getText().toString();
+                 username = mUsername.getText().toString();
+                 password = mPassword.getText().toString();
 
-
-                if(true){ //TODO 2b: check if user input something valid (not empty fields)
-                     //TODO 2c : if true, set mProgressBar and loadingPleastWait visibility to View.VISIBLE
-
+                if(!(email.isEmpty() || username.isEmpty() || password.isEmpty())){ //2b: check if user input something valid (not empty fields)
+                     //2c : if true, set mProgressBar and loadingPleastWait visibility to View.VISIBLE
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    loadingPleaseWait.setVisibility(View.VISIBLE);
                     Log.d(TAG, "checks went through");
 
-                    //TODO 2d: Use a firebaseMethod to register the new email
+                    //2d: Use a firebaseMethod to register the new email
+                    FirebaseMethods methods = new FirebaseMethods(getApplicationContext());
+                    methods.registerNewEmail(email, password, username);
                 }
             }
         });

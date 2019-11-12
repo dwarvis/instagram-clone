@@ -3,15 +3,16 @@ package edu.cis.instagramclone.Share;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -80,8 +81,9 @@ public class NextActivity extends AppCompatActivity {
 
                 if(intent.hasExtra(getString(R.string.selected_image))){
                     imgUrl = intent.getStringExtra(getString(R.string.selected_image));
-                     //TODO 5e: use uploadNewPhoto when share button is clicked
-                    // TODO 5e: use R.string.new_photo, caption variable, imageCount instance var, imgUrl instance var and null
+                     //5e: use uploadNewPhoto when share button is clicked
+                    // 5e: use R.string.new_photo, caption variable, imageCount instance var, imgUrl instance var and null
+                    mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl, null);
                 }
 //                else if(intent.hasExtra(getString(R.string.selected_bitmap))){
 //                    bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));

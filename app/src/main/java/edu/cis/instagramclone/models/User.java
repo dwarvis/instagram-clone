@@ -7,8 +7,24 @@ import android.os.Parcelable;
  * Created by User on 6/26/2017.
  */
 
-public class User implements Parcelable{ //TODO 3b :finish instance variables and constructor, check errors for clues
+public class User implements Parcelable{ //3b :finish instance variables and constructor, check errors for clues
 
+    private String user_id;
+    private long phone_number;
+    private String email;
+    private String username;
+
+    public User()
+    {
+
+    }
+    public User(String inUserID, long inPhone, String inEmail, String inUsername)
+    {
+        user_id = inUserID;
+        phone_number = inPhone;
+        email = inEmail;
+        username = inUsername;
+    }
 
     protected User(Parcel in) {
         user_id = in.readString();
