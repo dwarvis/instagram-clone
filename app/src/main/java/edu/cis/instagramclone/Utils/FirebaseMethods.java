@@ -110,12 +110,12 @@ public class FirebaseMethods {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                      // 5c: Get URL from firebase storage, it should be of type Uri
-                    taskSnapshot.getDownloadUrl();
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
                     //add the new photo to 'photos' node and 'user_photos' node
                      //5d: use addPhotoToDatabase with caption param and the firebase Url you obtained
-                    addPhotoToDatabase(caption, imgUrl);
+                    addPhotoToDatabase(caption, downloadUrl.toString());
                     //navigate to the main feed so the user can see their photo
                     Intent intent = new Intent(mContext, HomeActivity.class);
                     mContext.startActivity(intent);
@@ -414,9 +414,11 @@ public class FirebaseMethods {
         Photo photoObj = new Photo(caption, getTimestamp(), url, newPhotoKey, userID, tags, new ArrayList<Like>(), new ArrayList<Comment>());
 
         //5b: Once the Photo object has been created, insert it to the database at "user_photos" and "photos" nodes
+        //insert into database
         myRef.child(mContext.getString(R.string.dbname_user_photos))
-                .child(mContext.getString(R.string.dbname_photos))
-                .setValue(photoObj);
+                .child(FirebaseAuth.getInstance().getCurrentUser()
+                        .getUid()).child(newPhotoKey).setValue(photoObj);
+        myRef.child(mContext.getString(R.string.dbname_photos)).child(newPhotoKey).setValue(photoObj);
     }
 
     public int getImageCount(DataSnapshot dataSnapshot){
@@ -430,13 +432,6 @@ public class FirebaseMethods {
         return count;
     }
 
-    /**
-     * Update 'user_account_settings' node for the current user
-     * @param displayName
-     * @param website
-     * @param description
-     * @param phoneNumber
-     */
     public void updateUserAccountSettings(UserAccountSettings settings){ //TODO finish updateUserSettings
 
         Log.d(TAG, "updateUserAccountSettings: updating user account settings.");
