@@ -21,20 +21,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="edu.cis.instagramclone.Home.HomeActivity"
+            android:name=".Controller.Home.HomeActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleInstance">
 
         </activity>
-        <activity android:name="edu.cis.instagramclone.Likes.LikesActivity"
+        <activity android:name=".Controller.Likes.LikesActivity"
                   android:launchMode="singleInstance"/>
-        <activity android:name="edu.cis.instagramclone.Profile.ProfileActivity"
+        <activity android:name=".Controller.Profile.ProfileActivity"
                   android:launchMode="singleInstance"/>
-        <activity android:name="edu.cis.instagramclone.Share.ShareActivity"
+        <activity android:name=".Controller.Share.ShareActivity"
                   android:launchMode="singleInstance"/>
-        <activity android:name="edu.cis.instagramclone.Share.NextActivity"
+        <activity android:name=".Controller.Share.NextActivity"
                   android:launchMode="singleInstance"/>
-        <activity android:name="edu.cis.instagramclone.Login.LoginActivity"
+        <activity android:name=".Controller.Login.LoginActivity"
                   android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -42,24 +42,24 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="edu.cis.instagramclone.Profile.AccountSettingsActivity"
+        <activity android:name=".Controller.Profile.AccountSettingsActivity"
                   android:launchMode="singleInstance"/>
-        <activity android:name="edu.cis.instagramclone.Login.RegisterActivity"
+        <activity android:name=".Controller.Login.RegisterActivity"
                   android:launchMode="singleInstance"/>
-        <activity android:name="edu.cis.instagramclone.opengl.OpenGLES10Activity"
+        <activity android:name=".View.opengl.OpenGLES10Activity"
                   android:launchMode="singleInstance"
                   android:screenOrientation="portrait"/>
-        <activity android:name="edu.cis.instagramclone.opengl.NewStoryActivity"
+        <activity android:name=".View.opengl.NewStoryActivity"
                   android:launchMode="singleInstance"
                   android:screenOrientation="portrait"/>
         <activity
-            android:name="edu.cis.instagramclone.Search.SearchActivity"
+            android:name=".Controller.Search.SearchActivity"
             android:windowSoftInputMode="adjustNothing"
             android:launchMode="singleInstance">
 
         </activity>
-        <activity android:name=".materialcamera.CaptureActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".materialcamera.CaptureActivity2" android:screenOrientation="portrait"/>
+        <activity android:name=".View.materialcamera.CaptureActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".View.materialcamera.CaptureActivity2" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

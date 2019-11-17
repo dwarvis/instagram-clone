@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<edu.cis.instagramclone.materialcamera.internal.AutoFitTextureView
+<edu.cis.instagramclone.View.materialcamera.internal.AutoFitTextureView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/texture"
     android:layout_width="match_parent"
