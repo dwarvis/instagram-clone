@@ -189,7 +189,7 @@ public class EditProfileFragment extends Fragment implements
         final String email = mEmail.getText().toString();
         final long phoneNumber = Long.parseLong(mPhoneNumber.getText().toString());
 
-        //TODO 4 : This is a really bad way to update a database. Fix this so that is uses one single UserSettings Object and a single call to updateUserAccountSettings.
+        //TODO 4b : This is a really bad way to update a database. Fix this so that is uses one single UserSettings Object and a single call to updateUserAccountSettings.
         //update displayname
         mFirebaseMethods.updateUserAccountSettings(displayName, null, null, 0);
         //update website
