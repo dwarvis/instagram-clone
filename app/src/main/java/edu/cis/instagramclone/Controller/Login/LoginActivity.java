@@ -86,17 +86,21 @@ public class LoginActivity extends AppCompatActivity {
              public void onClick(View v) {
                  Log.d(TAG, "onClick: attempting to log in.");
 
-                  //1a: Get email and password strings from mEmail and mPassword EditText objects
-                 String email = mEmail.getText().toString();
-                 String password = mPassword.getText().toString();
+                  /***TODO 1a: Get email and password strings from mEmail and mPassword EditText object. Research the EditText class documentation to find out which method(s) will help. ***/
+                 /*
+                 *
+                 * CODE for 1a HERE
+                 *
+                 */
 
-                 if(email.isEmpty() || password.isEmpty()){ //1b. check whether the user gave a blank email or password
-                     Toast.makeText(mContext, "It's empty!!", Toast.LENGTH_SHORT).show(); //1c: if true use Toast.makeText to inform the user of an error, give any error message you want
+                 /*** CODE for 1b inside if statement parenthesis, should not be boolean "true" ***/
+                 if(true){ /*** TODO 1b. check whether the user gave a blank email or password, research which method(s) you can use from the EditText class ***/
+                     Toast.makeText(mContext, "STRING for 1c here", Toast.LENGTH_SHORT).show(); /*** TODO 1c: if true this line uses Toast.makeText to inform the user of an error, give any error message you want ***/
                  }else{
                      mProgressBar.setVisibility(View.VISIBLE);
                      mPleaseWait.setVisibility(View.VISIBLE);
 
-                     mAuth.signInWithEmailAndPassword(email, password) //1d. If email and password are present, use mAuth.signInWithEmailAndPassword to send it to firebase, change the null's
+                     mAuth.signInWithEmailAndPassword("CODE HERE for 1d", "CODE HERE for 1d") /*** TODO 1d. If email and password are present, use mAuth.signInWithEmailAndPassword to send it to firebase, change the parameters here ***/
                              .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                  @Override
                                  public void onComplete(@NonNull Task<AuthResult> task) {
@@ -107,21 +111,28 @@ public class LoginActivity extends AppCompatActivity {
                                      // If sign in fails, display a message to the user. If sign in succeeds
                                      // the auth state listener will be notified and logic to handle the
                                      // signed in user can be handled in the listener.
-                                     if (!(task.isSuccessful())) { //1f: check if task was not successful, change "true"
+
+                                     /*** CODE for 1e inside if statement parenthesis, should not be boolean "true" ***/
+                                     if (true) { /*** TODO 1e: check if task was not successful, research the Android Task Class ***/
                                          Log.w(TAG, "signInWithEmail:failed", task.getException());
 
-                                         //1g: inform the user with a Toast that something went wrong
+                                         /*** TODO 1f: inform the user with a Toast that something went wrong ***/
                                          Toast.makeText(mContext, "something went wrong.", Toast.LENGTH_SHORT).show();
                                          mProgressBar.setVisibility(View.GONE);
                                          mPleaseWait.setVisibility(View.GONE);
                                      }
                                      else{ //if task was successful
                                          try{
-                                             if(currentUser.isEmailVerified()) { //1h: Check if the user's email has been verified, change true
+                                             /*** CODE for 1g inside if statement parenthesis, should not be boolean "true" ***/
+                                             if(true) { /*** TODO 1g: Check if the user's email has been verified, change true, research the FirebaseUser class documentation for helpful method(s) ***/
                                                  Log.d(TAG, "onComplete: success. email is verified.");
-                                                 //1i: create an intent from LoginActivity to HomeActivity and start the intent
-                                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                                 startActivity(intent);
+                                                 /*** TODO 1h: create code to navigate from LoginActivity to HomeActivity, you'll have to research the Android Class used for navigating from one screen to another ***/
+
+                                                 /*
+                                                  *
+                                                  * CODE for 1h HERE
+                                                  *
+                                                  */
                                              }
                                              else
                                              {
@@ -203,27 +214,3 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -70,8 +70,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: closing the gallery fragment.");
-                getActivity().finish();
-                //6a: make the close button work with, research how an Fragment's methods can be used to close it.
+                /*** TODO 6a: make the close button work with, research how a Fragment's or Activity's methods can be used to close it. ***/
             }
         });
 
@@ -82,20 +81,10 @@ public class GalleryFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
 
-//                if(isRootTask()){
                     Log.d(TAG, "just clicked on the main activity");
                     Intent intent = new Intent(getActivity(), NextActivity.class);
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
                     startActivity(intent);
-//                }else{
-//                    Log.d(TAG, "clicked on the profile");
-//                    Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
-//                    intent.putExtra(getString(R.string.selected_image), mSelectedImage);
-//                    intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile_fragment));
-//                    startActivity(intent);
-//                    getActivity().finish();
-//                }
-
             }
         });
 
@@ -163,7 +152,8 @@ public class GalleryFragment extends Fragment {
         gridView.setColumnWidth(imageWidth);
 
         //use the grid adapter to adapter the images to gridview
-        GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview, mAppend, imgURLs);
+        GridImageAdapter adapter = new GridImageAdapter(getActivity(),
+                                                  R.layout.layout_grid_imageview, mAppend, imgURLs);
         gridView.setAdapter(adapter);
 
         //set the first image to be displayed when the activity fragment view is inflated

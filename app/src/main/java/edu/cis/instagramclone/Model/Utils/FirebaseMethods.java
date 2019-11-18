@@ -108,13 +108,13 @@ public class FirebaseMethods {
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                     // 5c: Get URL from firebase storage, it should be of type Uri
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
+                     /*** TODO 5c: Get URL from firebase storage, it should be of type Uri ***/
 
-                    //add the new photo to 'photos' node and 'user_photos' node
-                     //5d: use addPhotoToDatabase with caption param and the firebase Url you obtained
-                    addPhotoToDatabase(caption, downloadUrl.toString());
+
+                    /*** TODO 5d: use addPhotoToDatabase() with caption param and the firebase Url you obtained, this will
+                     * add the new photo to 'photos' node and 'user_photos' node
+                     */
+
                     //navigate to the main feed so the user can see their photo
                     Intent intent = new Intent(mContext, HomeActivity.class);
                     mContext.startActivity(intent);
@@ -409,15 +409,12 @@ public class FirebaseMethods {
         String tags = StringManipulation.getTags(caption);
         String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
 
-        //5a: create a photo object and initialize it with necessary values
-        Photo photoObj = new Photo(caption, getTimestamp(), url, newPhotoKey, userID, tags, new ArrayList<Like>(), new ArrayList<Comment>());
+        /*** TODO 5a: create a photo object and initialize it with necessary values ***/
 
-        //5b: Once the Photo object has been created, insert it to the database at "user_photos" and "photos" nodes
-        //insert into database
-        myRef.child(mContext.getString(R.string.dbname_user_photos))
-                .child(FirebaseAuth.getInstance().getCurrentUser()
-                        .getUid()).child(newPhotoKey).setValue(photoObj);
-        myRef.child(mContext.getString(R.string.dbname_photos)).child(newPhotoKey).setValue(photoObj);
+
+        /*** TODO 5b: Once the Photo object has been created, insert it to the database at both "user_photos" and "photos" nodes
+        insert into database ***/
+
     }
 
     public int getImageCount(DataSnapshot dataSnapshot){
@@ -431,36 +428,36 @@ public class FirebaseMethods {
         return count;
     }
 
-    public void updateUserAccountSettings(UserAccountSettings settings){ //TODO finish updateUserSettings
+    public void updateUserAccountSettings(String displayName, String website, String description, long phoneNumber){ //TODO finish updateUserSettings
 
         Log.d(TAG, "updateUserAccountSettings: updating user account settings.");
 
-        if(settings.getDescription() != null) {
-            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
-                    .child(userID)
-                    .child(mContext.getString(R.string.field_description))
-                    .setValue(settings.getDescription());
-        }
-
-        if(settings.getDisplay_name() != null){
+        if(displayName != null){
             myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                     .child(userID)
                     .child(mContext.getString(R.string.field_display_name))
-                    .setValue(settings.getDisplay_name());
+                    .setValue(displayName);
         }
 
-        if(settings.getPhone() != 0) {
-            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
-                    .child(userID)
-                    .child(mContext.getString(R.string.field_phone_number))
-                    .setValue(settings.getPhone());
-        }
-
-        if(settings.getWebsite() != null) {
+        if(website != null) {
             myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                     .child(userID)
                     .child(mContext.getString(R.string.field_website))
-                    .setValue(settings.getWebsite());
+                    .setValue(website);
+        }
+
+        if(description != null) {
+            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
+                    .child(userID)
+                    .child(mContext.getString(R.string.field_description))
+                    .setValue(description);
+        }
+
+        if(phoneNumber != 0) {
+            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
+                    .child(userID)
+                    .child(mContext.getString(R.string.field_phone_number))
+                    .setValue(phoneNumber);
         }
     }
 

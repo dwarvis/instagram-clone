@@ -57,7 +57,7 @@ public class EditProfileFragment extends Fragment implements
         AuthCredential credential = EmailAuthProvider
                 .getCredential(mAuth.getCurrentUser().getEmail(), password);
 
-        ///////////////////// Prompt the user to re-provide their sign-in credentials
+        // Prompt the user to re-provide their sign-in credentials
         mAuth.getCurrentUser().reauthenticate(credential)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -65,21 +65,26 @@ public class EditProfileFragment extends Fragment implements
                         if(task.isSuccessful()){
                             Log.d(TAG, "User re-authenticated.");
 
-                            ///////////////////////check to see if the email is not already present in the database
-                            mAuth.fetchProvidersForEmail(mEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
+                            //check to see if the email is not already present in the database
+                            mAuth.fetchProvidersForEmail(mEmail.getText()
+                                    .toString())
+                                    .addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<ProviderQueryResult> task) {
                                     if(task.isSuccessful()){
                                         try{
                                             if(task.getResult().getProviders().size() == 1){
                                                 Log.d(TAG, "onComplete: that email is already in use.");
-                                                Toast.makeText(getActivity(), "That email is already in use", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getActivity(),
+                                                          "That email is already in use",
+                                                               Toast.LENGTH_SHORT).show();
                                             }
                                             else{
                                                 Log.d(TAG, "onComplete: That email is available.");
 
-                                                //////////////////////the email is available so update it
-                                                mAuth.getCurrentUser().updateEmail(mEmail.getText().toString())
+                                                //the email is available so update it
+                                                mAuth.getCurrentUser()
+                                                        .updateEmail(mEmail.getText().toString())
                                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
@@ -145,7 +150,6 @@ public class EditProfileFragment extends Fragment implements
         mChangeProfilePhoto = (TextView) view.findViewById(R.id.changeProfilePhoto);
         mFirebaseMethods = new FirebaseMethods(getActivity());
 
-
         //setProfileImage();
         setupFirebaseAuth();
 
@@ -164,8 +168,8 @@ public class EditProfileFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: attempting to save changes.");
-                 //4a: call the method that will save the profile settings whent he checkmark is clicked
-                saveProfileSettings();
+                 /*** TODO 4a: call the method that will save the profile settings when the checkmark is clicked ***/
+
             }
         });
 
@@ -185,28 +189,15 @@ public class EditProfileFragment extends Fragment implements
         final String email = mEmail.getText().toString();
         final long phoneNumber = Long.parseLong(mPhoneNumber.getText().toString());
 
-
-//        //case1: if the user made a change to their username
-//        if(mUserSettings.getUser().getUsername() != null && !mUserSettings.getUser().getUsername().equals(username) ){
-//
-//            checkIfUsernameExists(username);
-//        }
-//        //case2: if the user made a change to their email
-//        if(mUserSettings.getUser().getEmail() != null && !mUserSettings.getUser().getEmail().equals(email)){
-//
-//            // step1) Reauthenticate
-//            //          -Confirm the password and email
-//            ConfirmPasswordDialog dialog = new ConfirmPasswordDialog();
-//            dialog.show(getFragmentManager(), getString(R.string.confirm_password_dialog));
-//            dialog.setTargetFragment(EditProfileFragment.this, 1);
-//        }
-
-        UserAccountSettings settings = mUserSettings.getSettings();
-        settings.setDescription(description);
-        settings.setDisplay_name(displayName);
-        settings.setPhone(phoneNumber);
-        settings.setWebsite(website);
-        mFirebaseMethods.updateUserAccountSettings(settings);
+        //TODO 4 : This is a really bad way to update a database. Fix this so that is uses one single UserSettings Object and a single call to updateUserAccountSettings.
+        //update displayname
+        mFirebaseMethods.updateUserAccountSettings(displayName, null, null, 0);
+        //update website
+        mFirebaseMethods.updateUserAccountSettings(null, website, null, 0);
+        //update description
+        mFirebaseMethods.updateUserAccountSettings(null, null, description, 0);
+        //update phoneNumber
+        mFirebaseMethods.updateUserAccountSettings(null, null, null, phoneNumber);
     }
 
     /**
@@ -312,9 +303,6 @@ public class EditProfileFragment extends Fragment implements
 
                 //retrieve user information from the database
                 setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
-
-                //retrieve images for the user in question
-
             }
 
             @Override
@@ -338,6 +326,4 @@ public class EditProfileFragment extends Fragment implements
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
-
 }

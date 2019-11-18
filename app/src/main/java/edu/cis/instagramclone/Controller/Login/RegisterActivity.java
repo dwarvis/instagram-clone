@@ -66,24 +66,18 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void init(){
-        btnRegister.setOnClickListener(new View.OnClickListener() { //this creates listener for the register button and register a new email
+        btnRegister.setOnClickListener(new View.OnClickListener() { /***** Part 2: this a creates listener for the register button and register a new email *****/
             @Override
             public void onClick(View v) { //when the button is clicked, this happens
 
-                //2a: get email, username and password from EditTexts, store them in instance variables
-                 email = mEmail.getText().toString();
-                 username = mUsername.getText().toString();
-                 password = mPassword.getText().toString();
+                /*** TODO 2a: get email, username and password from EditTexts, store them in instance variables ***/
 
-                if(!(email.isEmpty() || username.isEmpty() || password.isEmpty())){ //2b: check if user input something valid (not empty fields)
-                     //2c : if true, set mProgressBar and loadingPleastWait visibility to View.VISIBLE
-                    mProgressBar.setVisibility(View.VISIBLE);
-                    loadingPleaseWait.setVisibility(View.VISIBLE);
-                    Log.d(TAG, "checks went through");
+                if(true){ /*** TODO 2b: check if user input something valid, look at the email, username and password EditTexts and check that they aren't empty ***/
+                     /*** TODO 2c : if true, set mProgressBar and loadingPleasWait visibility to View.VISIBLE ***/
 
-                    //2d: Use a firebaseMethod to register the new email
-                    FirebaseMethods methods = new FirebaseMethods(getApplicationContext());
-                    methods.registerNewEmail(email, password, username);
+
+
+                    /*** TODO 2d: Use a firebaseMethod to register the new email, you will to looks at the FirebaseMethods class ***/
                 }
             }
         });

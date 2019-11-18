@@ -9,7 +9,7 @@ import java.util.List;
  * Created by User on 7/29/2017.
  */
 
-public class Photo implements Parcelable { //3a finish constructor that takes in all possible instance variables
+public class Photo implements Parcelable { /*** TODO 3a finish constructor that takes in all possible instance variables ***/
 
     private String caption;
     private String date_created;
@@ -24,20 +24,6 @@ public class Photo implements Parcelable { //3a finish constructor that takes in
     public Photo() {
 
     }
-
-    public Photo(String inCaption, String inDate, String inImagePath, String inPhotoID,
-                 String inUserID, String inTags, List<Like> inLikes, List<Comment> inComments)
-    {
-        caption = inCaption;
-        date_created = inDate;
-        image_path = inImagePath;
-        photo_id = inPhotoID;
-        user_id = inUserID;
-        tags = inTags;
-        likes = inLikes;
-        comments = inComments;
-    }
-
 
 
     protected Photo(Parcel in) {
