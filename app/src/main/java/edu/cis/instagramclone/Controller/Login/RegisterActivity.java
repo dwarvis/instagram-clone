@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -72,12 +74,22 @@ public class RegisterActivity extends AppCompatActivity {
 
                 /*** TODO 2a: get email, username and password from EditTexts, store them in instance variables ***/
 
-                if(true){ /*** TODO 2b: check if user input something valid, look at the email, username and password EditTexts and check that they aren't empty ***/
+                email = mEmail.getText().toString();
+                password = mPassword.getText().toString();
+                username = mUsername.getText().toString();
+
+                if(!(email == "" || password == "" || username == "" || email == null || password == null || username == null)){ /*** TODO 2b: check if user input something valid, look at the email, username and password EditTexts and check that they aren't empty ***/
                      /*** TODO 2c : if true, set mProgressBar and loadingPleasWait visibility to View.VISIBLE ***/
+                     mProgressBar.setVisibility(View.VISIBLE);
+                     mProgressBar.setVisibility(View.VISIBLE);
 
 
+                    /*** TODO 2d: Use a mail  to register the new email, you will to looks at the FirebaseMethods class ***/
 
-                    /*** TODO 2d: Use a firebaseMethod to register the new email, you will to looks at the FirebaseMethods class ***/
+                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+
+
+                    });
                 }
             }
         });
@@ -87,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "checkInputs: checking inputs for null values.");
         if(email.equals("") || username.equals("") || password.equals("")){
             Toast.makeText(mContext, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
-            return false;
+            return false;S
         }
         return true;
     }

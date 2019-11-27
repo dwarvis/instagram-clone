@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "834583203912",
+    "firebase_url": "https://pset3-instagram-clone-mr-lagos.firebaseio.com",
+    "project_id": "pset3-instagram-clone-mr-lagos",
+    "storage_bucket": "pset3-instagram-clone-mr-lagos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834583203912:android:78d76bfa8530807717087d",
+        "android_client_info": {
+          "package_name": "edu.cis.instagramclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834583203912-96s137n10ggq3pub58pflqs50s41fv60.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.cis.instagramclone",
+            "certificate_hash": "e108cd997ba6485b4122a82d68ce3ec10c5a9ee4"
+          }
+        },
+        {
+          "client_id": "834583203912-6sdetj46dgr602dl6lsjq1canaoveto5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-V6sdkV_qenhN4x2cCIl3b00k6xtjJ6Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834583203912-6sdetj46dgr602dl6lsjq1canaoveto5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
